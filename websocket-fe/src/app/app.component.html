@@ -1,0 +1,49 @@
+<div class="container">
+  <h2>Select Room</h2>
+  <main>
+    <section class="alerts">
+      <div>
+        <ul>
+          <li *ngFor="let alert of alertList">
+            <strong>{{ alert.type }}: </strong>{{ alert.message }}
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section class="chat">
+
+      <nav class="nav col-md-6 mb-2 nav-pills flex-column flex-sm-row">
+        <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="activeRoom == 'general' ? 'active disabled' : ''" (click)="onSelectRoom('general')" aria-current="page" href="#">General</a>
+        <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="activeRoom == 'typescript' ? 'active disabled' : ''" (click)="onSelectRoom('typescript')" href="#">Typescript</a>
+        <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="activeRoom == 'nestJs' ? 'active disabled' : ''" (click)="onSelectRoom('nestJs')" href="#">NestJs</a>
+      </nav>
+      <div class="row col-md-6">
+        <p class="col">Status: {{ isMemberOfActiveRoom ? 'Joined' : 'NOT Joined' }}</p>
+        <div class="col">
+          <button class="btn btn-warning btn-sm" (click)="toggleRoomMemebership()">{{ isMemberOfActiveRoom ? 'Leave' : 'Join' }}</button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input
+            class="form-control"
+            type="text"
+            placeholder="wirte your message"
+            [(ngModel)]="newMessage"
+            (keyup)="$event.keyCode == 13 && sendMessage()"
+          />
+          <button class="btn btn-sm btn-primary" (click)="sendMessage()">Send</button>
+        </div>
+
+      </div>
+
+      <div>
+        <ul>
+          <li *ngFor="let data of messageList && messageList[activeRoom]">
+            <strong>{{ data.sender }}: </strong>{{ data.message }}
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</div>
